@@ -1,7 +1,6 @@
 <?php
-class Users extends ModelBase implements IteratorAggregate
+class Users extends AgregatorModelBase
 {
-    public $users = [];
     private $usersPath = "dataset/users.json";
 
     public $page = null;
@@ -9,10 +8,9 @@ class Users extends ModelBase implements IteratorAggregate
     public $totalPages = null;
     public $totalRecords = null;
 
-    public $orderBy = null;
-    public $order = null;
+    
 
-    protected $orderByCast = [
+    protected $nestedAliases = [
         'id' => 'id',
         'name' => 'name',
         'username' => 'username',
@@ -36,7 +34,7 @@ class Users extends ModelBase implements IteratorAggregate
     {
         $users = $this->importUsers();
         foreach ($users as $user) {
-            $this->users[] = new User($user);
+            $this->data[] = new User($user);
         }
     }
 
@@ -51,7 +49,7 @@ class Users extends ModelBase implements IteratorAggregate
 
     public function getIterator(): ArrayIterator
     {
-        return new ArrayIterator($this->users);
+        return new ArrayIterator($this->data);
     }
 
     /**
@@ -61,7 +59,7 @@ class Users extends ModelBase implements IteratorAggregate
      */
     public function getUserById(int $id): User
     {
-        foreach ($this->users as $user) {
+        foreach ($this->data as $user) {
             if ($user->id === $id) {
                 return $user;
             }
@@ -76,9 +74,9 @@ class Users extends ModelBase implements IteratorAggregate
     public function deleteUser(int $id)
     {
         $result = false;
-        foreach ($this->users as $key => $user) {
+        foreach ($this->data as $key => $user) {
             if ($user->id === $id) {
-                unset($this->users[$key]);
+                unset($this->data[$key]);
                 $result = true;
             }
         }
@@ -94,7 +92,7 @@ class Users extends ModelBase implements IteratorAggregate
     public function updateUser(int $id, array $data)
     {
         $result = false;
-        foreach ($this->users as $key => $user) {
+        foreach ($this->data as $key => $user) {
             if ($user->id === $id) {
                 $users[$key] = $data;
                 $result = true;
@@ -111,7 +109,7 @@ class Users extends ModelBase implements IteratorAggregate
     public function toArray(): array
     {
         $users = [];
-        foreach ($this->users as $user) {
+        foreach ($this->data as $user) {
             $users[] = $user->toArray();
         }
         return $users;
@@ -133,7 +131,7 @@ class Users extends ModelBase implements IteratorAggregate
     public function getUniqueId(): int
     {
         $ids = [];
-        foreach ($this->users as $user) {
+        foreach ($this->data as $user) {
             $ids[] = $user->id;
         }
         return max($ids) + 1;
@@ -149,14 +147,14 @@ class Users extends ModelBase implements IteratorAggregate
         if ($user->id === null) {
             $user->id = $this->getUniqueId();
         } else {
-            foreach ($this->users as $iterUser) {
+            foreach ($this->data as $iterUser) {
                 if ($user->id === $iterUser->id) {
                     return false;
                 }
             }
         }
 
-        $this->users[] = $user;
+        $this->data[] = $user;
         $this->saveUsers();
     }
 

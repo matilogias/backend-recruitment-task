@@ -3,20 +3,52 @@
 class AgregatorModelBase implements IteratorAggregate
 {
     public $data = [];
-    public function order($orderBy, $order = 'asc')
-    {
-    }
+
+    public $orderBy = null;
+    public $order = null;
+
+    protected $nestedAliases = [];
+
     /**
-     * order users by property
+     * get nested property by alias
+     * @param string $alias
+     * @return mixed
+     */
+    public function getNestedPropertyByAlias($alias)
+    {
+        if (
+            !isset($this->nestedAliases[$alias])
+            || empty($alias)
+            || !is_string($alias)
+            || empty($this->nestedAliases[$alias])
+        ) {
+            return false;
+        }
+
+        return $this->nestedAliases[$alias];
+    }
+
+
+    /**
+     * order data by value of any object property or nested property
+     * nested property is defined by dot notation eg. address.street = $data->address->street
+     * for safety 
      * @param string $orderBy
      * @param string $order
      */
-    protected static function orderStatic(&$toOrder, $orderBy, $order = 'asc')
+    public function order($orderBy, $order = 'asc')
     {
+        $orderBy = $this->getNestedPropertyByAlias($orderBy);
         if (empty($orderBy) || !in_array($order, ['asc', 'desc'])) {
-            throw new \Exception('Invalid order parameters');
+            return false;
         }
-        usort($toOrder, function ($a, $b) use ($orderBy, $order) {
+
+
+        if (!$orderBy) {
+            return false;
+        }
+
+        usort($this->data, function ($a, $b) use ($orderBy, $order) {
             $aValue = $this->objectWalker($a, $orderBy);
             $bValue = $this->objectWalker($b, $orderBy);
 
@@ -33,10 +65,15 @@ class AgregatorModelBase implements IteratorAggregate
                 return $aValue <=> $bValue;
             }
         });
+
+        $this->orderBy = $orderBy;
+        $this->order = $order;
     }
 
+
+
     /**
-     * Walks an object to get the value of a property
+     * Walks an object to get the value of a property by dot notation eg. address.street = $data->address->street
      * @param object $object
      * @param string $property
      * @return mixed

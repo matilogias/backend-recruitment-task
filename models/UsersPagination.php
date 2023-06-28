@@ -11,7 +11,7 @@ class UsersPagination extends Users
         parent::__construct();
         $this->page = $page;
         $this->pageSize = $pageSize;
-        $this->totalRecords = count($this->users);
+        $this->totalRecords = count($this->data);
         $this->totalPages = ceil($this->totalRecords / $this->pageSize);
     }
 
@@ -20,9 +20,9 @@ class UsersPagination extends Users
      */
     public function paginate()
     {
-        //users are in $this->users
+        //users are in $this->data
         $start = ($this->page - 1) * $this->pageSize;
         $end = $start + $this->pageSize;
-        $this->users = array_slice($this->users, $start, $end);
+        $this->data = array_slice($this->data, $start, $end);
     }
 }
