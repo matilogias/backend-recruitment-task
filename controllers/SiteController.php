@@ -22,7 +22,6 @@ class SiteController extends BaseController {
         $model = new Users();
         if (isset($_POST['submit'])) {
             $userArray = Users::loadPostData();
-            
             $user = new User($userArray);
 
             if (!$user->validate()) {

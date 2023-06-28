@@ -60,6 +60,9 @@ class AgregatorModelBase implements IteratorAggregate
                 $aValue = (string) $aValue;
                 $bValue = (string) $bValue;
             }
+            
+            if (is_string($aValue)) $aValue = strtolower($aValue);
+            if (is_string($bValue)) $bValue = strtolower($bValue);
 
             if ($order === 'desc') {
                 return $bValue <=> $aValue;

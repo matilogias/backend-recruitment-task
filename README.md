@@ -1,6 +1,6 @@
 # Zadanie rekrutacyjne
 
-Zrobiłem prostą aplikację wyświetlającą Wszystkich użytkowników z pliku z możliwością ich dodania i usunięcia. Formularz dodawania użytkownika wyświetla się w modalu którego zawartość jest ładowana dopiero po klinkięciu przycisku dodawania użytkownika.
+Zrobiłem prostą aplikację wyświetlającą wszystkich użytkowników z pliku z możliwością ich dodania i usunięcia. Formularz dodawania użytkownika wyświetla się w modalu którego zawartość jest ładowana dopiero po klinkięciu przycisku dodawania użytkownika.
 
 # Framework
 
@@ -16,9 +16,11 @@ Przy zakomentowanym przykładzie z parametrami strona będzie wyglądać tak:
 
 ![wyświetlona strona](readme_images/page_with_params.png)
 
-Wyświetli dzięki użyciu metody render, wyświetla się ona w głównym szablonie strony.
+Strona dzięki użyciu metody render, wyświetla się ona w głównym szablonie strony.
 
-Obsługa modeli przypomina trochę ORM. Nie jest w pełni dopracowana ale i tak przypiesza pracę z danymi. Dzięki nim można łatwo dodać paginację lub sortowanie.
+Obsługa modeli przypomina trochę ORM. Przypiesza to pracę z danymi. Dzięki nim można łatwo dodać paginację lub sortowanie.
+
+Pracowałem nad tym tylko dwa dni więc nie jest to jeszcze pełnoprawny framework. Przykładowo system walidacji formularzy jest dodany ale nie posiada tylko funkcje sprawdzania czy dany atrybut jest wymagany i czy jest to email. Niezależnie od tego jest on zrobiony w taki sposób że można go łatwo rozszerzyć o nowe funkcje.
 
 # Backend/Full-stack recruitment task
 
