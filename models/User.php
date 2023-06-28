@@ -81,7 +81,7 @@ class User extends ModelBase
   {
     parent::validate();
     
-    $requiredFields = ['name', 'username', 'email', 'address', 'phone', 'website', 'company'];
+    $requiredFields = ['name', 'username', 'email', 'address'];
     $this->multiCheck($requiredFields, 'required');
 
     $this->isEmail('email');

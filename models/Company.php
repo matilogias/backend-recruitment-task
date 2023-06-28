@@ -44,7 +44,7 @@ class Company extends ModelBase
   {
     parent::validate();
 
-    $this->required('name');
+    //$this->required('name');
 
     return empty($this->errors);
   }

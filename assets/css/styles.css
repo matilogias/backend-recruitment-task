@@ -2,3 +2,13 @@
 .starting-title {
     text-align: center;
 }
+
+/* <div class="form-group">
+    <label for="bs">BS</label>
+    <input type="text" name="bs" placeholder="BS" class="form-control" required>
+</div> */
+/* add red "*" after label but onlu if input is required */
+label.required-label::after {
+    content: " *";
+    color: red;
+}

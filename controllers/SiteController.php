@@ -18,45 +18,22 @@ class SiteController extends BaseController {
         error(print_r($_POST, true));
         if (isset($_POST['submit'])) {
             error('here submit');
-            $userArray = array(
-                'id' => post('id'),
-                'name' => post('name'),
-                'username' => post('username'),
-                'email' => post('email'),
-                'address' => array(
-                    'street' => post('street'),
-                    'suite' => post('suite'),
-                    'city' => post('city'),
-                    'zipcode' => post('zipcode'),
-                    'geo' => array(
-                        'lat' => post('lat'),
-                        'lng' => post('lng')
-                    )
-                ),
-                'phone' => post('phone'),
-                'website' => post('website'),
-                'company' => array(
-                    'name' => post('companyName'),
-                    'catchPhrase' => post('catchPhrase'),
-                    'bs' => post('bs')
-                )
-            );
-            echo '<pre>';
-            print_r($userArray);
-            echo '</pre>';
+            $userArray = Users::loadPostData();
             
             $user = new User($userArray);
 
             if (!$user->validate()) {
+                
                 echo '<pre>';
                 print_r($user->getErrors());
                 echo '</pre>';
+                $this->redirect('index.php?controller=site&action=add&error=' . $user->getFirstError());
             }
             else 
                 $model->addUser($user);
 
-            $this->redirect('index.php?controller=site&action=display-table');
+            //$this->redirect('index.php?controller=site&action=display-table');
         }
-        return $this->render('form-add-user', ['model' => $model]);
+        return $this->render('add-user', ['model' => $model]);
     }
 }

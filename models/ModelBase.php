@@ -78,6 +78,14 @@ class ModelBase
     }
 
     /**
+     * getFirstError
+     */
+    public function getFirstError()
+    {
+        return isset($this->errors[0]) ? $this->errors[0] : null;
+    }
+
+    /**
      * getFromArray
      */
     public function getFromArray($array, $varName, $default = null, $className = null)

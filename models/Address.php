@@ -55,7 +55,7 @@ class Address extends ModelBase
   {
     parent::validate();
 
-    $this->required('street');
+    $this->required('city');
 
     if (!$this->geo->validate()) {
       $this->errors = array_merge($this->errors, $this->geo->getErrors());
