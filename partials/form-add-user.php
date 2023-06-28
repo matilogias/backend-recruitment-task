@@ -34,7 +34,7 @@
                 <input type="text" name="suite" placeholder="Suite" class="form-control">
             </div>
             <div class="form-group">
-                <label for="city">City</label>
+                <label for="city" class="required-label">City</label>
                 <input type="text" name="city" placeholder="City" class="form-control" required>
             </div>
             <div class="form-group">

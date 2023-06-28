@@ -12,3 +12,17 @@ label.required-label::after {
     content: " *";
     color: red;
 }
+
+.h-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+.table-container {
+    overflow-x: scroll;
+}
+
+.table-container svg {
+    width: 15px;
+    height: 15px;
+}

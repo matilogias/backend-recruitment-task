@@ -1,3 +1,19 @@
+# Zadanie rekrutacyjne
+
+Zrobiłem prostą aplikację wyświetlającą Wszystkich użytkowników z pliku z możliwością ich dodania i usunięcia. Formularz dodawania użytkownika wyświetla się w modalu którego zawartość jest ładowana dopiero po klinkięciu przycisku dodawania użytkownika.
+
+# Framework
+
+Na potrzeby tego zadania zrobiłem prosty framework MVC. Robiąc go wzorowałem się na frameworku YII2 dzięki czemu modele i kontrolery ładują się automatycznie i możemy szybko dodać stronę np.
+![dodawanie strony](readme_images/add_page.png)
+Wyświetlona strona:
+![wyświetlona strona](readme_images/page.png)
+Przy zakomentowanym przykładzie z parametrami strona będzie wyglądać tak:
+![wyświetlona strona](readme_images/page_with_params.png)
+Wyświetli dzięki użyciu metody render, wyświetla się ona w głównym szablonie strony.
+
+Obsługa modeli przypomina trochę ORM. Nie jest w pełni dopracowana ale i tak przypiesza pracę z danymi. Dzięki nim można łatwo dodać paginację lub sortowanie.
+
 # Backend/Full-stack recruitment task
 
 ----

@@ -6,7 +6,7 @@ class UsersPagination extends Users
     /**
      * constructor
      */
-    public function __construct($page = 1, $pageSize = 5)
+    public function __construct($page = 1, $pageSize = 4)
     {
         parent::__construct();
         $this->page = $page;
@@ -20,9 +20,7 @@ class UsersPagination extends Users
      */
     public function paginate()
     {
-        //users are in $this->data
         $start = ($this->page - 1) * $this->pageSize;
-        $end = $start + $this->pageSize;
-        $this->data = array_slice($this->data, $start, $end);
+        $this->data = array_slice($this->data, $start, $this->pageSize);
     }
 }

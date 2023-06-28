@@ -1,8 +1,12 @@
 <?php
-function error($message)
+function error()
 {
+    $data = func_get_args();
     $file = fopen("logs/error.log", "a");
-    fwrite($file, $message . "\n");
+    fwrite($file, date("Y-m-d H:i:s") . "\n");
+    foreach ($data as $value) {
+        fwrite($file, print_r($value, true) . "\n");
+    }
     fclose($file);
 }
 function post($name, $default = null)
@@ -24,10 +28,13 @@ function request($name, $request ='post', $default = null)
     throw new Exception("Request type \"$request\" is not supported");
 }
 
-function printer($data)
+function printer()
 {
+    $data = func_get_args();
     echo "<pre>";
-    print_r($data);
+    foreach ($data as $value) {
+        print_r($value);
+    }
     echo "</pre>";
 }
 error("start");
@@ -63,4 +70,23 @@ function getControllerAndAction()
         $action = stringToActionName($_GET['action']);
     }
     return [$controller, $action];
+}
+
+function icon($name, $class = '')
+{
+    $icons = [
+        'arrow-up' => '<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M450-160v-526L202-438l-42-42 320-320 320 320-42 42-248-248v526h-60Z"/></svg>',
+        'arrow-down' => '<svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M480-160 160-480l42-42 248 248v-526h60v526l248-248 42 42-320 320Z"/></svg>',
+    ];
+
+    if (isset($icons[$name])) {
+        return $icons[$name];
+    }
+
+    return '';
+}
+
+function isAjax()
+{
+    return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
 }

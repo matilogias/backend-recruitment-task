@@ -38,19 +38,21 @@ class AgregatorModelBase implements IteratorAggregate
      */
     public function order($orderBy, $order = 'asc')
     {
-        $orderBy = $this->getNestedPropertyByAlias($orderBy);
+        $this->orderBy = 'id';
+        $this->order = 'asc';
+        $orderByAafterAlias = $this->getNestedPropertyByAlias($orderBy);
         if (empty($orderBy) || !in_array($order, ['asc', 'desc'])) {
             return false;
         }
 
 
-        if (!$orderBy) {
+        if (!$orderByAafterAlias) {
             return false;
         }
 
-        usort($this->data, function ($a, $b) use ($orderBy, $order) {
-            $aValue = $this->objectWalker($a, $orderBy);
-            $bValue = $this->objectWalker($b, $orderBy);
+        usort($this->data, function ($a, $b) use ($orderByAafterAlias, $order) {
+            $aValue = $this->objectWalker($a, $orderByAafterAlias);
+            $bValue = $this->objectWalker($b, $orderByAafterAlias);
 
             // <==> operator does not work with different types
             // so we cast everything to string to make it more robust
@@ -95,4 +97,42 @@ class AgregatorModelBase implements IteratorAggregate
     {
         return new ArrayIterator([]);
     }
+
+    /**
+     * getOrderLinkValues - returns string with current orderby and order values
+     */
+    public function getOrderLinkValues($before = null, $orderby = null, $order = null)
+    {
+        if (empty($orderby)) {
+            $orderby = $this->orderBy;
+        }
+
+        if (empty($order)){
+            $order = $this->order;
+        }
+        
+        
+        $before = (is_string($before) ? $before : '');
+
+        return $before . 'orderby=' . $orderby . '&order=' . $order;
+    }
+
+    /**
+     * getLinkValuesForOrder - returns string with values for orderby and order
+     * id $orderby = $this->orderBy and $order = $this->order then return string with opposite order
+     * @param String $orderby
+     * @param String $order
+     * @return string
+     */
+    public function getLinkValuesForOrder($before = null, $orderby, $order = 'asc')
+    {
+        if (empty($orderby) || empty($order) && $order !== 'asc' && $order !== 'desc') {
+            return '';
+        }
+
+        return $this->getOrderLinkValues($before, $orderby, ($this->orderBy == $orderby && $this->order == $order ? ($order == 'asc' ? 'desc' : 'asc') : $order));
+    }
+
+    
+
 }
