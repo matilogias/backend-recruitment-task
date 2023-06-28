@@ -11,6 +11,17 @@ class SiteController extends BaseController {
         return $this->render('display-table', ['model' => $model]);
     }
 
+    public function actionDisplayTablePaginated()
+    {
+        $page = get('page', 1);
+        $model = new UsersPagination($page);
+        $orderBy = get('orderby', 'id');
+        $order = get('order', 'asc');
+        $model->order($orderBy, $order);
+        $model->paginate();
+        return $this->render('display-table-paginated', ['model' => $model]);
+    }
+
     public function actionAdd()
     {
         $model = new Users();

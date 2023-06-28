@@ -4,6 +4,10 @@ class ModelBase
 {
     public $errors = [];
 
+    public $page = null;
+    public $pageSize = null;
+    public $totalPages = null;
+    public $totalRecords = null;
     public function toArray()
     {
         return [];

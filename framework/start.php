@@ -1,8 +1,11 @@
 <?php
 include "framework/functions.php";
 
+//include abstractClasses
+foreach (glob("abstractClasses/*.php") as $filename) {
+    include $filename;
+}
 //include models
-include "models/ModelBase.php";
 foreach (glob("models/*.php") as $filename) {
     if ($filename !== "models/ModelBase.php") {
         include $filename;
